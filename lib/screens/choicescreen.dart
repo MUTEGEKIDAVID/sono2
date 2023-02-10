@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sonoreader2/screens/UltraSound.dart';
+import 'package:sonoreader2/screens/navigation_screen.dart';
 class MyChoice{
 
   String choice;
@@ -25,6 +26,46 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
       appBar:AppBar(
         backgroundColor:Color.fromRGBO(61, 226, 218, 20) ,
         title:Text("Patient information"),
+
+        actions: [
+
+          PopupMenuButton(
+            // add icon, by default "3 dot" icon
+            // icon: Icon(Icons.book)
+              itemBuilder: (context){
+                return [
+                  PopupMenuItem<int>(
+                    value: 0,
+                    child: Text("Home"),
+                  ),
+
+                  PopupMenuItem<int>(
+                    value: 1,
+                    child: Text("Patient Information"),
+                  ),
+
+                  PopupMenuItem<int>(
+                    value: 2,
+                    child: Text("UltraSound Diagnosis"),
+                  ),
+                ];
+              },
+              onSelected:(value){
+                if(value == 0){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (content)=> NavScreen()));
+                }else if(value == 1){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (content)=> ChoiceScreen()));
+                }else if(value == 2){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (content)=> UltraSound()));
+                }
+              }
+          ),
+
+
+        ],
       ),
       body: Column(
         children: [
