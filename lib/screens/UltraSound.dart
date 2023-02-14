@@ -24,6 +24,7 @@ class _UltraSoundState extends State<UltraSound> {
   GlobalKey<FormState> formkey = GlobalKey<FormState >();
   String? _selectedOption;
   String? _selectedOption2;
+  String? _selectedOption3;
 
   File? imageSelect;
   final _imagePicker =ImagePicker();
@@ -77,7 +78,8 @@ class _UltraSoundState extends State<UltraSound> {
 
             ]
         ),
-        body:Form(
+        body: SingleChildScrollView(
+              child:Form(
             key: formkey ,
           child: Column(
             children: [
@@ -163,6 +165,49 @@ class _UltraSoundState extends State<UltraSound> {
                           });
                         },
                         items: ['Upper', 'Middle','Lower']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:10),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left:8,bottom:8,right:30,top:8),
+                      child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom:15),
+                            child:  Text("Location:"),
+                          )),
+                    ),
+                    SizedBox(
+                      width:250,
+                      height:55,
+                      child: DropdownButtonFormField<String>(
+
+                        decoration: InputDecoration(
+                          labelText: "Select Location",
+                          border: OutlineInputBorder(
+
+
+                          ),
+                        ),
+
+                        value: _selectedOption3,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedOption3 = newValue;
+                          });
+                        },
+                        items: ['Posterior', 'Auxillary','Anterior']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -270,7 +315,7 @@ class _UltraSoundState extends State<UltraSound> {
           ),
             )
 
-
+        )
     );
   }
   //get image from camera
