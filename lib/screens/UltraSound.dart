@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:sonoreader2/screens/choicescreen.dart';
 import 'package:sonoreader2/screens/navigation_screen.dart';
+import 'package:http/http.dart';
 
 
 
@@ -25,6 +26,7 @@ class _UltraSoundState extends State<UltraSound> {
   String? _selectedOption;
   String? _selectedOption2;
   String? _selectedOption3;
+  String? _selectedOption4;
 
   File? imageSelect;
   final _imagePicker =ImagePicker();
@@ -120,6 +122,7 @@ class _UltraSoundState extends State<UltraSound> {
                           setState(() {
                             _selectedOption = newValue;
                           });
+                          print(_selectedOption);
                         },
                         items: ['Right', 'left']
                             .map<DropdownMenuItem<String>>((String value) {
@@ -266,6 +269,7 @@ class _UltraSoundState extends State<UltraSound> {
     ),
                             onPressed: (){
                               pickImageCamera();
+
                             },
 
 
@@ -307,6 +311,99 @@ class _UltraSoundState extends State<UltraSound> {
                   )
 
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:20,right :110),
+                child: Container(child: Text("How satisfied are you with the results",
+                    style:TextStyle(
+                        fontWeight: FontWeight.bold
+                    )
+                )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:10),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom:15),
+                            child:  Text(""),
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10,left:0),
+                      child: SizedBox(
+                        width:330,
+                        height:58,
+                        child: DropdownButtonFormField<String>(
+
+                          decoration: InputDecoration(
+                            labelText: "Select reply",
+                            border: OutlineInputBorder(
+
+
+                            ),
+                          ),
+                          value: _selectedOption4,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedOption4 = newValue;
+                            });
+                          },
+                          items: ['Not satified', 'Barely satisfied','neutral','somewhat satisfied','very satisfied']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 100),
+                  child: Container(
+                    child: SizedBox(
+                      width:250,
+                      child: ElevatedButton(
+
+
+                        child: Text(
+                            "Save".toUpperCase(),
+                            style: TextStyle(fontSize: 18)
+                        ),
+                        style: ButtonStyle(
+
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(61, 226, 218, 20)),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+
+                                  //side: BorderSide(color: Colors.red)
+                                )
+                            )
+
+                        ),
+                        onPressed: (){
+                          //Navigator.push(context,
+                             // MaterialPageRoute(builder: (content)=> ));
+
+                        },
+
+
+
+                      ),
+                    ),
+
+                  ),
+                ),
               )
 
 
