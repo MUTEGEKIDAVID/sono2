@@ -9,7 +9,8 @@ class PatientIdProvider with ChangeNotifier {
 
   String get patientId => _patientId;
 
-  void setPatientId(String id) {
+
+  void  setPatientId(String id) {
     patientId = id;
   }
 

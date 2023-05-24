@@ -21,6 +21,7 @@ String? patient_id;
 
 
 
+
 class MyChoice{
 
   String choice;
@@ -41,7 +42,7 @@ class ChoiceScreen extends StatefulWidget {
 Future<DataModel?> submitData(String fname,String lname,String mname,String age,String gender,String job,String smokestatus,String district,String subcounty,String parish,String village) async {
 
    var response = await http.post(
-       Uri.parse('https://api.sonoreader.com/sonoreader-api/patients/'),
+       Uri.parse('http://api.sonoreader.com/patient_info'),
        body: {
          "first_name": fname,
          "last_name": lname,
@@ -61,28 +62,41 @@ Future<DataModel?> submitData(String fname,String lname,String mname,String age,
    print(data);
 
    if (response.statusCode == 201) {
+     // String responseString = response.body;
+     // dataModelFromJson(responseString);
+
      String responseString = response.body;
-     dataModelFromJson(responseString);
+     var jsonData = json.decode(responseString);
+     final id = jsonData['id'];
+      patient_id = id.toString();
+
+
+     // Create a DataModel object with the extracted id
+     DataModel dataModel = DataModel(id: id);
    } else
      return null;
 
 }
 
-Future<void> getIdFromAPI() async {
-  final response = await http.get(Uri.parse('https://api.sonoreader.com/sonoreader-api/patients/'));
+Future<String> getIdFromAPI() async {
+  final response = await http.get(Uri.parse('http://api.sonoreader.com/patient_info'));
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
 
     final results = data['results'];
-    final lastResult = results[results.length - 1];
-    final id = lastResult['id'];
-    patient_id = id.toString();
-    print(patient_id);
+    //final lastResult = results[results.length - 1];
+    //final id = lastResult['id'];
+    final id=data["id"];
+     String patient_id = id.toString();
+     return patient_id;
+
 
   } else {
     throw Exception('Failed to load id from API');
   }
+
 }
+
 
 class _ChoiceScreenState extends State<ChoiceScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState >();
@@ -199,7 +213,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                         MaterialPageRoute(builder: (content)=> ChoiceScreen()));
                   }else if(value == 2){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (content)=> UltraSound()));
+                        MaterialPageRoute(builder: (content)=> UltraSound(PATID: '',)));
                   }
                 }
             ),
@@ -600,7 +614,8 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                                           ),
                                           onPressed: () async {
 
-                                            Provider.of<PatientIdProvider>(context, listen: false).setPatientId(patient_id.toString());
+
+
 
                                              fname= myController.text;
                                              lname=myController2.text;
@@ -616,7 +631,10 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                                              diagnosis=myControllerDialogue.text;
 
                                               DataModel? data = await submitData(fname,lname,mname,age,gender,job,smokerstatus,district,subcounty,parish,village);
-                                             getIdFromAPI();
+                                            //String pad=await getIdFromAPI();
+
+                                             //print(pad);
+
 
 
                                              setState(() {
@@ -626,7 +644,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
 
 
                                             Navigator.push(context,
-                                                MaterialPageRoute(builder: (content)=> UltraSound()));
+                                                MaterialPageRoute(builder: (content)=> UltraSound(PATID:"5")));
 
                                           },
 

@@ -18,7 +18,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   List<Widget> screens =[
 
     ChoiceScreen(),
-    UltraSound(),
+    UltraSound(PATID: '',),
 
 
   ];
