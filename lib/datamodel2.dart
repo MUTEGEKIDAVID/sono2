@@ -10,66 +10,22 @@ DataModel2 dataModel2FromJson(String str) => DataModel2.fromJson(json.decode(str
 String dataModel2ToJson(DataModel2 data) => json.encode(data.toJson());
 
 class DataModel2 {
-String diagnosis;
-String error;
+  final int? patientId;
+  final String? diagnosis;
+  final String? scanError;
 
-DataModel2({
-  required this.diagnosis,
-  required this.error,
-});
+  DataModel2({this.patientId, this.diagnosis, this.scanError});
 
-factory DataModel2.fromJson(Map<String, dynamic> json) {
-return DataModel2(
-  diagnosis: json['diagnosis'],
-  error: json['error'],
-);
+  factory DataModel2.fromJson(Map<String, dynamic> json) {
+    return DataModel2(
+      patientId: json['patient_id'],
+      diagnosis: json['diagnosis'],
+      scanError: json['scan error'],
+    );
+  }
+
+  Object? toJson() {
+
+
+  }
 }
-
-Map<String, dynamic> toJson() {
-  return {
-    diagnosis: 'diagnosis',
-    error: 'error',
-  };
-}
-}
-
-
-// class DataModel2 {
-//   DataModel2({
-//      required this.id,
-//      required this.image,
-//     required this.diagnosisId,
-//     required this.hemithorax,
-//     required this.lungzone,
-//     required this.location,
-//     required this.patientId,
-//   });
-//
-//   int id;
-//   String image;
-//   String diagnosisId;
-//   String hemithorax;
-//   String lungzone;
-//   String location;
-//   int patientId;
-//
-//   factory DataModel2.fromJson(Map<String, dynamic> json) => DataModel2(
-//     id: json["id"],
-//     image: json["image"],
-//     diagnosisId: json["diagnosisId"],
-//     hemithorax: json["hemithorax"],
-//     lungzone: json["lungzone"],
-//     location: json["location"],
-//     patientId: json["patientId"],
-//   );
-//
-//   Map<String, dynamic> toJson() => {
-//     "id": id,
-//     "image": image,
-//     "diagnosisId": diagnosisId,
-//     "hemithorax": hemithorax,
-//     "lungzone": lungzone,
-//     "location": location,
-//     "patientId": patientId,
-//   };
-// }
